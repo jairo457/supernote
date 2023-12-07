@@ -8,8 +8,29 @@ environment:
 
 dependencies:
   cloud_firestore: ^4.13.0
+  shared_preferences: ^2.2.2
+  concentric_transition: ^1.0.3
+  lottie: ^1.2.2
+  flutter_local_notifications: ^16.1.0
+  rxdart: ^0.27.7
+  intl: ^0.18.1
+  flutter_datetime_picker_plus: ^2.1.0
+  circular_menu: ^2.0.1
+  day_night_switcher: ^0.2.0+1
+  expandable_page_view: ^1.0.17
+  sqflite: ^2.3.0
+  http: ^1.1.0
+  flutter_facebook_auth: ^6.0.3
+  slide_digital_clock: ^1.0.3
+  get: ^4.6.6
+  google_sign_in: ^6.1.6
+  flutter_switch: ^0.3.2
+  get_storage: ^2.1.1
+  firebase_messaging: ^14.7.6
   firebase_auth: ^4.13.0
   firebase_core: ^2.22.0
+  day_night_switch: ^1.0.4
+  path_provider: ^2.1.1
   provider: ^6.0.5
   material_design_icons_flutter: ^7.0.7296
   flutter:
@@ -19,8 +40,16 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/SuperNoteIcon.png"
 
 flutter:
   uses-material-design: true
   assets:
    - assets/.
+   - assets/animation/.
+   - assets/B2/.

@@ -72,40 +72,50 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ],
       ),
-      onPressed: () {},
+      onPressed: () async {
+        bool res = await emailAuth.signInWithGoogle();
+        if (res) {
+          Navigator.pushNamed(context, '/home');
+        }
+      },
     );
     final GitButton = TextButton(
-      style: ButtonStyle(
-          foregroundColor: const MaterialStatePropertyAll<Color>(Colors.white),
-          backgroundColor: const MaterialStatePropertyAll<Color>(
-              Color.fromARGB(255, 232, 230, 230)),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18.0),
-          ))),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            "Ingresar con Github",
-            style: TextStyle(
-                fontSize: 13.0, fontFamily: "Raleway", color: Colors.black),
-          ),
-          Image.asset(
-            'assets/Git_icon.png',
-            width: 20,
-            height: 20,
-          ),
-        ],
-      ),
-      onPressed: () {},
-    );
+        style: ButtonStyle(
+            foregroundColor:
+                const MaterialStatePropertyAll<Color>(Colors.white),
+            backgroundColor: const MaterialStatePropertyAll<Color>(
+                Color.fromARGB(255, 232, 230, 230)),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18.0),
+            ))),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Ingresar con Github",
+              style: TextStyle(
+                  fontSize: 13.0, fontFamily: "Raleway", color: Colors.black),
+            ),
+            Image.asset(
+              'assets/Git_icon.png',
+              width: 20,
+              height: 20,
+            ),
+          ],
+        ),
+        onPressed: () async {
+          bool res = await emailAuth.signInWithGitHub();
+          if (res) {
+            Navigator.pushNamed(context, '/home');
+          }
+        });
 
     final FaceButton = TextButton(
       style: ButtonStyle(
           foregroundColor: const MaterialStatePropertyAll<Color>(Colors.white),
-          backgroundColor:
-              const MaterialStatePropertyAll<Color>(Color(0xFF226597)),
+          backgroundColor: const MaterialStatePropertyAll<Color>(
+              Color.fromARGB(255, 75, 71, 186)),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18.0),
@@ -128,6 +138,35 @@ class _LoginScreenState extends State<LoginScreen> {
       onPressed: () {},
     );
 
+    final CommunButton = TextButton(
+      style: ButtonStyle(
+          foregroundColor: const MaterialStatePropertyAll<Color>(Colors.white),
+          backgroundColor: const MaterialStatePropertyAll<Color>(
+              Color.fromARGB(255, 171, 169, 169)),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.0),
+          ))),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Ingresar con correo',
+            style: TextStyle(
+                fontSize: 13.0, fontFamily: "Raleway", color: Colors.white),
+          ),
+          Image.asset(
+            'assets/email.png',
+            width: 20,
+            height: 20,
+          ),
+        ],
+      ),
+      onPressed: () {
+        Navigator.pushNamed(context, '/loge');
+      },
+    );
+
     return Scaffold(
       body: Container(
           height: MediaQuery.of(context).size.height,
@@ -137,13 +176,14 @@ class _LoginScreenState extends State<LoginScreen> {
             shrinkWrap: true,
             children: [
               Icon(
+                color: Color.fromARGB(255, 166, 11, 138),
                 Icons.edit_note,
                 size: 80,
               ),
               Center(
                 child: Text(
-                  'Bienvenido a Supernote',
-                  style: TextStyle(fontSize: 20),
+                  'Bienvenido a SuperNote',
+                  style: TextStyle(color: Colors.black, fontSize: 20),
                 ),
               ),
               Container(
@@ -154,19 +194,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     GoogleButton,
                     GitButton,
                     FaceButton,
+                    CommunButton,
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/sing');
+                        },
                         child: Text(
-                          'Ingresar con correo',
+                          '¿Sin cuenta?',
                           style:
                               TextStyle(color: Color.fromARGB(255, 95, 95, 95)),
-                        ))
+                        )),
                   ],
                 ),
               ),
-              txtUser,
-              txtPass,
-              btnEntrar
             ],
           )),
     );

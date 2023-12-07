@@ -1,8 +1,9 @@
 import 'package:flutter/widgets.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 class GlobalValues {
-  static ValueNotifier<bool> FTheme1 = ValueNotifier<bool>(true);
-  static ValueNotifier<bool> FTheme2 = ValueNotifier<bool>(true);
-  static ValueNotifier<bool> flagTask = ValueNotifier<bool>(
-      true); //Valor que cmabiara para actualizar la vita de las tareas
+  static ValueNotifier<bool> DarkTheme = ValueNotifier<bool>(true);
+  static ValueNotifier<bool> LightTheme = ValueNotifier<bool>(true);
+  static Rx<bool> flagNote = true.obs;
+  //Valor que cmabiara para actualizar la vita de las tareas
 }
