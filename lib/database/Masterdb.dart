@@ -66,7 +66,7 @@ class MasterDB {
         'SELECT * FROM tblNotes WHERE IdNote = (SELECT MAX(IdNote) FROM tblNotes)');
     liti = result.map((task) => NoteModel.fromMap(task)).toList();
     //print("esta" + liti.toString());
-    return liti![0].idnote!;
+    return liti!.isEmpty ? 0 : liti![0].idnote!;
   }
 
   /*

@@ -40,6 +40,15 @@ class EmailAuth {
     }
   }
 
+  Future<void> sendEmailVerification() async {
+    final User user = auth.currentUser!;
+    user.sendEmailVerification();
+  }
+
+  Future<void> ResetPassword(ema) async {
+    await FirebaseAuth.instance.sendPasswordResetEmail(email: ema);
+  }
+
   Future<bool> signInWithGoogle() async {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -62,5 +71,9 @@ class EmailAuth {
     } else {
       return false;
     }
+  }
+
+  Future<User?> GetUser() async {
+    return FirebaseAuth.instance.currentUser;
   }
 }

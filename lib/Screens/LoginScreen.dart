@@ -162,8 +162,8 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ],
       ),
-      onPressed: () {
-        Navigator.pushNamed(context, '/loge');
+      onPressed: () async {
+        Navigator.pushNamed(context, '/logE');
       },
     );
 
@@ -197,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     CommunButton,
                     TextButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, '/sing');
+                          Navigator.pushNamed(context, '/reg');
                         },
                         child: Text(
                           '¿Sin cuenta?',

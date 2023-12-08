@@ -26,15 +26,21 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   MasterDB? masterDB;
+  User? user;
 
   @override
   void initState() {
     super.initState();
     masterDB = MasterDB();
+    GetU();
   }
 
   Future<void> _singOut() async {
     FirebaseAuth.instance.signOut();
+  }
+
+  GetU() async {
+    user = FirebaseAuth.instance.currentUser;
   }
 
   @override
@@ -58,14 +64,14 @@ class _HomeScreenState extends State<HomeScreen> {
     Widget createDrawer(context) {
       return Drawer(
         child: Stack(clipBehavior: Clip.antiAlias, children: [
-          Positioned(
+          /*  Positioned(
               bottom: 0,
               width: MediaQuery.of(context).size.width,
               child: TextButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/set');
                   },
-                  child: Text('hola'))),
+                  child: Text('hola'))),*/
           /*Positioned(
             bottom: 0,
             left: 170,
@@ -74,56 +80,45 @@ class _HomeScreenState extends State<HomeScreen> {
           ),*/
           ListView(
             children: [
-              const UserAccountsDrawerHeader(
+              UserAccountsDrawerHeader(
                   currentAccountPicture: CircleAvatar(
                     backgroundImage: NetworkImage('https://i.pravatar.cc/300'),
                   ),
-                  accountName: Text("name"),
-                  accountEmail: Text("email")),
-              /*ListTile(
-                leading: Image.network('https://cdn3.iconfinder.com/data/icons/street-food-and-food-trucker-1/64/fruit-organic-plant-orange-vitamin-64.png'),
-                leading: Image.asset('assets/naranja.png'),
-                trailing: Icon(Icons.chevron_right),
-                title: Text('FruitApp'),
-                subtitle: Text('Carrusel'),
-                onTap: () {},
-              ),*/
+                  accountName: Text("Correo"),
+                  accountEmail: Text(user!.email!.toString())),
               ListTile(
-                leading: Icon(Icons.task_alt_outlined),
+                leading: Icon(Icons.account_circle_sharp),
                 trailing: Icon(Icons.chevron_right),
-                title: Text('Task manager'),
-                onTap: () => Navigator.pushNamed(context, '/popular'),
+                title: Text(
+                  'Perfil',
+                  style: TextStyle(
+                      fontFamily: 'Pixel',
+                      fontSize: MediaQuery.of(context).size.width / 18),
+                ),
+                onTap: () => Navigator.pushNamed(context, '/perf'),
               ),
               ListTile(
-                leading: Icon(Icons.task_alt_outlined),
+                leading: Icon(Icons.color_lens),
                 trailing: Icon(Icons.chevron_right),
-                title: Text('Test provider'),
-                onTap: () => Navigator.pushNamed(context, '/prov'),
+                title: Text('Tema',
+                    style: TextStyle(
+                        fontFamily: 'Pixel',
+                        fontSize: MediaQuery.of(context).size.width / 18)),
+                onTap: () => Navigator.pushNamed(context, '/them'),
               ),
-              TextButton(
-                style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStatePropertyAll<Color>(Colors.black)),
-                onPressed: () {
-                  Get.changeTheme(
-                      Get.isDarkMode ? ThemeData.light() : ThemeData.dark());
-                  Get.changeThemeMode(
-                      Get.isDarkMode ? ThemeMode.light : ThemeMode.dark);
-                },
-                child: Text('Cambia'),
-              ),
-              TextButton(
-                style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStatePropertyAll<Color>(Colors.black)),
-                onPressed: () {
+              ListTile(
+                leading: Icon(Icons.door_front_door_outlined),
+                trailing: Icon(Icons.logout),
+                title: Text('Cerrar Sesion',
+                    style: TextStyle(
+                        fontFamily: 'Pixel',
+                        fontSize: MediaQuery.of(context).size.width / 20)),
+                onTap: () {
                   FirebaseAuth.instance.signOut();
                   GoogleSignIn().signOut();
                   Navigator.pushNamed(context, '/login');
                 },
-                child: Text('Cerrar sesion'),
               ),
-              Settings
             ],
           ),
         ]),
@@ -154,10 +149,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.white,
-        title: Text(
-          'Bienvenidos :)',
-          style: TextStyle(color: Colors.white),
-        ),
       ),
       drawer: createDrawer(context),
       body: ListView(
@@ -195,7 +186,11 @@ class _HomeScreenState extends State<HomeScreen> {
               children: <Widget>[
                 ListView(shrinkWrap: true, children: [
                   Container(
-                    color: Colors.blueAccent,
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(width: 1.5, color: Colors.grey),
+                      ),
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -205,7 +200,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                             icon: Icon(Icons.note_add,
                                 size: MediaQuery.of(context).size.width / 11)),
-                        Text(GlobalValues.flagNote.toString())
+                        Text(GlobalValues.flagNote.value ? '' : '')
                       ],
                     ),
                   ),
@@ -245,12 +240,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          /* Container(
-            padding: EdgeInsets.only(right: 10, left: 10, top: 20),
-            child: ListView(shrinkWrap: true, children: [
-              Alarmas,
-            ]),
-          ),*/
         ],
       ),
     );

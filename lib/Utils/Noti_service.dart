@@ -8,7 +8,7 @@ class NotificationService {
 
   Future<void> initNotification() async {
     AndroidInitializationSettings initializationSettingsAndroid =
-        const AndroidInitializationSettings('flutter_logo');
+        const AndroidInitializationSettings('b2_icon');
 
     var initializationSettingsIOS = DarwinInitializationSettings(
         requestAlertPermission: true,
@@ -27,7 +27,7 @@ class NotificationService {
   notificationDetails() {
     return const NotificationDetails(
         android: AndroidNotificationDetails('channelId', 'channelName',
-            importance: Importance.max),
+            importance: Importance.max, priority: Priority.high),
         iOS: DarwinNotificationDetails());
   }
 
@@ -40,19 +40,29 @@ class NotificationService {
   Future PeriodicallyNotificationDaily(
       {int? id, String? title, String? body, String? payLoad}) async {
     return notificationsPlugin.periodicallyShow(
-        id!, title, body, RepeatInterval.daily, await notificationDetails());
+        id!, title, body, RepeatInterval.daily, await notificationDetails(),
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle);
   }
 
   Future PeriodicallyNotificationHour(
       {int? id, String? title, String? body, String? payLoad}) async {
     return notificationsPlugin.periodicallyShow(
-        id!, title, body, RepeatInterval.hourly, await notificationDetails());
+        id!, title, body, RepeatInterval.hourly, await notificationDetails(),
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle);
+  }
+
+  Future PeriodicallyNotificationMinute(
+      {int? id, String? title, String? body, String? payLoad}) async {
+    return notificationsPlugin.periodicallyShow(id!, title, body,
+        RepeatInterval.everyMinute, await notificationDetails(),
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle);
   }
 
   Future PeriodicallyNotificationWeek(
       {int? id, String? title, String? body, String? payLoad}) async {
     return notificationsPlugin.periodicallyShow(
-        id!, title, body, RepeatInterval.weekly, await notificationDetails());
+        id!, title, body, RepeatInterval.weekly, await notificationDetails(),
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle);
   }
 
   Future scheduleNotification(

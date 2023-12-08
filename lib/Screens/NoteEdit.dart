@@ -19,7 +19,6 @@ class NoteEdit extends StatefulWidget {
 class _AddProfesorState extends State<NoteEdit> {
   DateTime fecha = DateTime.now();
   RxString fech = RxString('');
-  List lit = [];
   RxInt dropDownValue = RxInt(1); //importancia
   String id = '';
   int temp = 0;
@@ -38,7 +37,8 @@ class _AddProfesorState extends State<NoteEdit> {
     DropdownMenuItem(value: 1, child: Text('Una vez')),
     DropdownMenuItem(value: 2, child: Text('Cada hora')),
     DropdownMenuItem(value: 3, child: Text('Cada dia')),
-    DropdownMenuItem(value: 4, child: Text('Cada semana'))
+    DropdownMenuItem(value: 4, child: Text('Cada semana')),
+    DropdownMenuItem(value: 5, child: Text('Cada minuto'))
   ];
 
   TextEditingController TxtTitle = TextEditingController();
@@ -77,8 +77,8 @@ class _AddProfesorState extends State<NoteEdit> {
   }
 
   GetId() async {
-    tempi = await masterDB!.GETID_NOTI() ?? 1;
-    tempi = tempi + 1;
+    tempi = await masterDB!.GETID_NOTI() ?? 0;
+    tempi += 1;
     //id = temp.toString();
     //print('id ' + id);
   }
@@ -90,24 +90,10 @@ class _AddProfesorState extends State<NoteEdit> {
         toggleButtonColor: Colors.amber,
         items: [
           CircularMenuItem(
-              icon: Icons.device_thermostat,
+              icon: Icons.arrow_back,
               onTap: () {
-                Navigator.pushNamed(context, '/home');
-              }),
-          CircularMenuItem(
-              icon: Icons.search,
-              onTap: () {
-                //callback
-              }),
-          CircularMenuItem(
-              icon: Icons.settings,
-              onTap: () {
-                //callback
-              }),
-          CircularMenuItem(
-              icon: Icons.star,
-              onTap: () {
-                print(tempi);
+                Get.back();
+                //print(tempi);
               }),
           CircularMenuItem(
               icon: Icons.save,
@@ -140,6 +126,7 @@ class _AddProfesorState extends State<NoteEdit> {
                         break;
                       case 2:
                         NotificationService().PeriodicallyNotificationHour(
+                          id: tempi,
                           title: TxtTitle.text.length > 20
                               ? TxtTitle.text.substring(0, 20)
                               : TxtTitle.text,
@@ -150,6 +137,7 @@ class _AddProfesorState extends State<NoteEdit> {
                         break;
                       case 3:
                         NotificationService().PeriodicallyNotificationDaily(
+                          id: tempi,
                           title: TxtTitle.text.length > 20
                               ? TxtTitle.text.substring(0, 20)
                               : TxtTitle.text,
@@ -160,6 +148,18 @@ class _AddProfesorState extends State<NoteEdit> {
                         break;
                       case 4:
                         NotificationService().PeriodicallyNotificationWeek(
+                          id: tempi,
+                          title: TxtTitle.text.length > 20
+                              ? TxtTitle.text.substring(0, 20)
+                              : TxtTitle.text,
+                          body: TxtDescription.text.length > 20
+                              ? TxtDescription.text.substring(0, 20)
+                              : TxtDescription.text,
+                        );
+                        break;
+                      case 5:
+                        NotificationService().PeriodicallyNotificationMinute(
+                          id: tempi,
                           title: TxtTitle.text.length > 20
                               ? TxtTitle.text.substring(0, 20)
                               : TxtTitle.text,
@@ -169,8 +169,8 @@ class _AddProfesorState extends State<NoteEdit> {
                         );
                         break;
                     }
-                    Get.back();
                   }
+                  Get.back();
                 } else {
                   masterDB!.UPDATE_Note('tblNotes', {
                     //El simbolo ! proteje contra  valores nulos
@@ -229,8 +229,8 @@ class _AddProfesorState extends State<NoteEdit> {
                         );
                         break;
                     }
-                    Get.back();
                   }
+                  Get.back();
                 }
               }),
         ]);

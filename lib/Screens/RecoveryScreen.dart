@@ -5,19 +5,18 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:super_note/Firebase/email_auth.dart';
 
-class LogEmailScreen extends StatefulWidget {
-  const LogEmailScreen({super.key});
+class RecoveryScreen extends StatefulWidget {
+  const RecoveryScreen({super.key});
 
   @override
-  State<LogEmailScreen> createState() => _LogEmailScreenState();
+  State<RecoveryScreen> createState() => _RecoveryScreenState();
 }
 
-class _LogEmailScreenState extends State<LogEmailScreen> {
+class _RecoveryScreenState extends State<RecoveryScreen> {
   final EmailAuth emailAuth = EmailAuth();
   String? cor;
   String? pas;
   TextEditingController TxtEmail = TextEditingController();
-  TextEditingController TxtPass = TextEditingController();
   final valid1 = false.obs;
   final valid2 = false.obs;
   final valid3 = false.obs;
@@ -28,46 +27,36 @@ class _LogEmailScreenState extends State<LogEmailScreen> {
             backgroundColor: MaterialStatePropertyAll<Color>(
                 Color.fromARGB(255, 245, 145, 145))),
         child: Text(
-          'Ingresar',
+          'Recuperar',
           style: TextStyle(color: Colors.black),
         ),
         onPressed: () async {
-          if (TxtEmail.text.isEmpty || TxtPass.text.isEmpty) {
+          if (TxtEmail.text.isEmpty) {
             TxtEmail.text.isEmpty ? valid1.value = true : valid1.value = false;
-            TxtPass.text.isEmpty ? valid3.value = true : valid3.value = false;
           } else {
             valid1.value = false;
             if (TxtEmail.text.isEmail) {
               valid2.value = false;
-              var email = TxtEmail.text;
-              var pwd = TxtPass.text;
-              cor = email;
-              pas = pwd;
-              bool res = await emailAuth.validateUser(
-                  emailUser: TxtEmail.text, pwdUser: TxtPass.text);
-              if (res) {
-                Navigator.pushNamed(context, '/home');
-              } else {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        backgroundColor: Color.fromARGB(255, 174, 195, 241),
-                        content: IntrinsicHeight(
-                          child: Column(
-                            children: [
-                              Center(
-                                child: Text(
-                                  'Correo o contraseña incorrectos',
-                                  style: TextStyle(color: Colors.black),
-                                ),
+              emailAuth.ResetPassword(TxtEmail.text);
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      backgroundColor: Color.fromARGB(255, 174, 195, 241),
+                      content: IntrinsicHeight(
+                        child: Column(
+                          children: [
+                            Center(
+                              child: Text(
+                                'Si la cuenta existe se enviara el correo',
+                                style: TextStyle(color: Colors.black),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      );
-                    });
-              }
+                      ),
+                    );
+                  });
             } else {
               valid2.value = true;
             }
@@ -91,7 +80,7 @@ class _LogEmailScreenState extends State<LogEmailScreen> {
                 Center(
                   child: Text(
                     textAlign: TextAlign.center,
-                    'Iniciar sesion',
+                    'Recuperacion de contraseña',
                     style: TextStyle(color: Colors.black, fontSize: 20),
                   ),
                 ),
@@ -119,40 +108,14 @@ class _LogEmailScreenState extends State<LogEmailScreen> {
                             errorText: valid1.value
                                 ? 'No puede estar vacio'
                                 : valid2.value
-                                    ? 'Ingrese un correo por favor'
+                                    ? 'Ingrese un su correo por favor'
                                     : null,
-                            enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.amber))),
-                      ),
-                      TextField(
-                        controller: TxtPass,
-                        onChanged: (teto) {
-                          if (TxtPass.text.isNotEmpty) {
-                            valid3.value = false;
-                          }
-                        },
-                        style: TextStyle(color: Colors.black),
-                        decoration: InputDecoration(
-                            label: Text(
-                              'Contraseña',
-                              style: TextStyle(color: Colors.amber),
-                            ),
-                            errorText:
-                                valid3.value ? 'No puede estar vacio' : null,
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.amber))),
                       ),
                       SizedBox(
                         height: 20,
                       ),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/reco');
-                          },
-                          child: Text(
-                            '¿Olvidaste tu contraseña? ',
-                            style: TextStyle(color: Colors.black),
-                          )),
                       btnEntrar
                     ],
                   ),

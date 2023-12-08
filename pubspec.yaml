@@ -8,6 +8,8 @@ environment:
 
 dependencies:
   cloud_firestore: ^4.13.0
+  file_picker: ^6.1.1
+  firebase_storage: ^11.5.5
   shared_preferences: ^2.2.2
   concentric_transition: ^1.0.3
   lottie: ^1.2.2
@@ -53,3 +55,8 @@ flutter:
    - assets/.
    - assets/animation/.
    - assets/B2/.
+
+  fonts:
+  - family: Pixel
+    fonts:
+      - asset: assets/fonts/Retro_Gaming.ttf

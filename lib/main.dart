@@ -39,15 +39,18 @@ class MainApp extends StatelessWidget {
       routes: GetRoutes(),
       debugShowCheckedModeBanner: false,
       title: 'Notes',
+      theme: StylesApp().lightheme,
+      darkTheme: StylesApp().darktheme,
+      themeMode: ThemeServices().getThemeMode(),
       home: showHome
           ? StreamBuilder(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  if (snapshot.data!.emailVerified) {
+                  if (snapshot.data!.emailVerified!) {
                     return HomeScreen();
                   } else {
-                    return SettingsScreen();
+                    return LoginScreen();
                   }
                 } else {
                   return LoginScreen();
@@ -55,9 +58,6 @@ class MainApp extends StatelessWidget {
               },
             )
           : OnBoardingScreen(),
-      theme: StylesApp().lightheme,
-      darkTheme: StylesApp().darktheme,
-      themeMode: ThemeServices().getThemeMode(),
     );
   }
 }
