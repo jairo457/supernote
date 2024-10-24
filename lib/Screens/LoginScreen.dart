@@ -135,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ],
       ),
-      onPressed: () {},
+      onPressed: () async {},
     );
 
     final CommunButton = TextButton(

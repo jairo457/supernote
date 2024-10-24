@@ -46,22 +46,8 @@ class NoteWidgetView extends StatelessWidget {
                           builder: (context) =>
                               NoteEdit(noteModel: noteModel)))),
             ),
-            //Se expande lo mas que puede
             Column(
               children: [
-                /* GestureDetector(
-                  //Para detectar eventos, en este caso en la imagen sin propiedad onpressed
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              NoteEdit(noteModel: noteModel))),
-                  child: Icon(
-                    color: Color.fromARGB(255, 166, 11, 138),
-                    Icons.edit_note,
-                    size: MediaQuery.of(context).size.width / 10,
-                  ),
-                ),*/
                 IconButton(
                     onPressed: () {
                       showDialog(
